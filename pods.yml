@@ -6,8 +6,8 @@ spec:
   selector:
     app: nodeapp
   ports:
-  - targetPort: 80
-    port: 80
+  - targetPort: 8080
+    port: 8080
     nodePort: 31444
   type: NodePort  
 
@@ -24,4 +24,4 @@ spec:
     - name: nodeapp
       image: sbabburu/nodeapp:tagVersion
       ports:
-        - containerPort: 80
+        - containerPort: 8080
