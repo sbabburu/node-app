@@ -6,23 +6,25 @@ pipeline {
     stages{
         stage('Build Docker Image'){
             steps{
-                sh "docker build . -t sbabburu/nodeapp:${env.BUILD_NUMBER} "
+                sh "docker build . -t sbabburu/nodeapp:${DOCKER_TAG} "
             }
         }
         stage('DockerHub Push'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'docker_login', passwordVariable: 'passwd', usernameVariable: 'username')]) {
-                     sh "docker push sbabburu/nodeapp:${env.BUILD_NUMBER}"
+                     sh "docker push sbabburu/nodeapp:${DOCKER_TAG}"
                 }
             }
         }
         stage('Deploy to DevServer'){
             steps {
+                sh "chmod +x changeTag.sh"
+                sh "./changeTag.sh ${DOCKER_TAG}"
                 input 'Deploy to Production?'
                 milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'kube-config',
-                    configs: 'pods.yml',
+                    configs: 'node-app-pod.yml',
                     enableConfigSubstitution: true
                 )
             }
