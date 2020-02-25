@@ -23,7 +23,6 @@ pipeline {
                 kubernetesDeploy(
                     kubeconfigId: 'kube-config',
                     configs: 'pods.yml',
-                    configs: 'services.yml',
                     enableConfigSubstitution: true
                 )
             }
