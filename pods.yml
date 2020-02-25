@@ -8,7 +8,7 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    nodePort: 31400
+    nodePort: 31444
   type: NodePort  
 
 
@@ -24,4 +24,4 @@ spec:
     - name: nodeapp
       image: sbabburu/nodeapp:tagVersion
       ports:
-        - containerPort: 80
+        - containerPort: 8080
