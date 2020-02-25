@@ -20,8 +20,8 @@ pipeline {
             steps {
                 sh "chmod +x changeTag.sh"
                 sh "./changeTag.sh ${DOCKER_TAG}"
-                withCredentials([string(credentialsId: 'master_login', variable: 'masterpwd')]) {
-                sh "scp -o StrictHostKeyChecking=no node-app-pod.yml -P ${masterpwd} cloud_user@34.221.106.158:/home/cloud_user"
+                withCredentials([usernameColonPassword(credentialsId: 'login', variable: 'credential')]) {
+                sh "scp -o StrictHostKeyChecking=no node-app-pod.yml ${credential}@34.221.106.158:/home/cloud_user"
                 script{
                   try{
                     sh "ssh cloud_user@34.221.106.158 kubectl apply -f ."
