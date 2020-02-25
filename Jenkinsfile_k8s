@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh "chmod +x changeTag.sh"
                 sh "./changeTag.sh ${DOCKER_TAG}"
-                sshagent(['master_machine']) { {
+                sshagent(['master_machine']) { 
                 sh "scp -o StrictHostKeyChecking=no node-app-pod.yml cloud_user@34.221.106.158:/home/cloud_user"
                 script{
                   try{
